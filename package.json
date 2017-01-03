@@ -1,0 +1,19 @@
+{
+  "name": "hkci",
+  "version": "1.0.0",
+  "description": "Command line interpreter for haskind",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrRacoon/hkci.git"
+  },
+  "author": "Erik Sutherland <erik.misu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrRacoon/hkci/issues"
+  },
+  "homepage": "https://github.com/MrRacoon/hkci#readme"
+}
