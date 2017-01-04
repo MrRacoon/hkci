@@ -2,6 +2,10 @@
 
 Command line interpreter for [haskind](https://github.com/MrRacoon/haskind).
 
+[![dependencies Status](https://david-dm.org/MrRacoon/haskind/status.svg)](https://david-dm.org/MrRacoon/hkci)
+[![Build Status](https://travis-ci.org/MrRacoon/hkci.svg?branch=master)](https://travis-ci.org/MrRacoon/hkci)
+
+
 This tool is used to explore the haskind library. haskind modules are loaded in
 the repl for you from the get go!
 
