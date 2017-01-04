@@ -27,7 +27,6 @@ $ hkci
 To load functions directly into the repl context, use `module` with an
 uppercase module name:
 
-
 ```
  λ > module(EITHER)
 ++ Left
@@ -47,10 +46,20 @@ uppercase module name:
 
 ### Cli Options
 
-Run  hkci in a valid haskind library folder, whether it be a git repo or a
-`node_modules` directory. (Should be run at the root of haskind)
-```sh
-hkci -c
-hkci --cwd
+```
+ Usage: node hkci
 
+  -c, --cwd      run hkci in the context of a haskind project
+  -h, --help     display this help
+  -v, --version  show version
+  -b, --bool     load Data.Bool
+  -e, --either   load Data.Either
+  -q, --eq       load Data.Eq
+  -x, --ix       load Data.Ix
+  -l, --list     load Data.List
+  -p, --map      load Data.Map
+  -y, --maybe    load Data.Maybe
+  -s, --string   load Data.String
+  -o, --ord      load Data.Ord
+  -t, --tuple    load Data.Tuple
 ```
