@@ -29,7 +29,7 @@ uppercase module name:
 
 
 ```
-[0.2.0] λ > module(EITHER)
+ λ > module(EITHER)
 ++ Left
 ++ Right
 ++ either
@@ -41,7 +41,7 @@ uppercase module name:
 ++ isRight
 ++ partitionEithers
 10
-[0.2.0] λ > Left(1)
+ λ > Left(1)
 { left: 1 }
 ```
 
