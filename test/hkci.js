@@ -1,8 +1,8 @@
 const should = require('should');
-const repl = require('../lib/hkci');
+const repl = require('../index');
 should();
 
-xdescribe('hkci', () => {
+describe('hkci', () => {
   describe('context', () => {
     it('includes Data', () => {
       repl.context.should.exist;
