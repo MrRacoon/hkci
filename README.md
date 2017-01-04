@@ -24,9 +24,28 @@ $ hkci
  λ >
 ```
 
-### Cli Options
+To load functions directly into the repl context, use `module` with an
+uppercase module name:
 
----
+
+```
+[0.2.0] λ > module(EITHER)
+++ Left
+++ Right
+++ either
+++ fromLeft
+++ fromRight
+++ lefts
+++ rights
+++ isLeft
+++ isRight
+++ partitionEithers
+10
+[0.2.0] λ > Left(1)
+{ left: 1 }
+```
+
+### Cli Options
 
 Run  hkci in a valid haskind library folder, whether it be a git repo or a
 `node_modules` directory. (Should be run at the root of haskind)
@@ -35,5 +54,3 @@ hkci -c
 hkci --cwd
 
 ```
-
----
