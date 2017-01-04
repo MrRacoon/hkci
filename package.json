@@ -4,7 +4,9 @@
   "description": "Command line interpreter for haskind",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "start": "node index.js",
+    "test": "npm run mocha",
+    "mocha": "mocha test/**/*.js"
   },
   "keywords": [
     "haskind",
@@ -37,6 +39,7 @@
     "node-getopt": "^0.2.3"
   },
   "devDependencies": {
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "should": "^11.1.2"
   }
 }
