@@ -4,38 +4,58 @@ should();
 
 describe('hkci', () => {
   describe('context', () => {
-    it('includes Data', () => {
-      repl.context.should.exist;
+    describe('Data', () => {
+      it('included', () => {
+        repl.context.Data.should.exist;
+      });
+      it('includes Bool', () => {
+        repl.context.Data.Bool.should.exist;
+      });
+      it('includes Either', () => {
+        repl.context.Data.Either.should.exist;
+      });
+      it('includes Eq', () => {
+        repl.context.Data.Eq.should.exist;
+      });
+      it('includes Ix', () => {
+        repl.context.Data.Ix.should.exist;
+      });
+      it('includes List', () => {
+        repl.context.Data.List.should.exist;
+      });
+      it('includes Map', () => {
+        repl.context.Data.Map.should.exist;
+      });
+      it('includes Maybe', () => {
+        repl.context.Data.Maybe.should.exist;
+      });
+      it('includes Ord', () => {
+        repl.context.Data.Ord.should.exist;
+      });
+      it('includes String', () => {
+        repl.context.Data.String.should.exist;
+      });
+      it('includes Tuple', () => {
+        repl.context.Data.Tuple.should.exist;
+      });
     });
-    it('includes Bool', () => {
-      repl.context.Bool.should.exist;
+    describe('util', () => {
+      it('included', () => {
+        repl.context.util.should.exist;
+      });
     });
-    it('includes Either', () => {
-      repl.context.Either.should.exist;
-    });
-    it('includes Eq', () => {
-      repl.context.Eq.should.exist;
-    });
-    it('includes Ix', () => {
-      repl.context.Ix.should.exist;
-    });
-    it('includes List', () => {
-      repl.context.List.should.exist;
-    });
-    it('includes Map', () => {
-      repl.context.Map.should.exist;
-    });
-    it('includes Maybe', () => {
-      repl.context.Maybe.should.exist;
-    });
-    it('includes Ord', () => {
-      repl.context.Ord.should.exist;
-    });
-    it('includes String', () => {
-      repl.context.String.should.exist;
-    });
-    it('includes Tuple', () => {
-      repl.context.Tuple.should.exist;
+    describe('module', () => {
+      describe('(Data.Either)', () => {
+        before(() => {
+          repl.context.module(repl.context.Data.Either);
+        });
+        it('includes Right', () => {
+          repl.context.Right.should.exist;
+        });
+        it('includes Left', () => {
+          repl.context.Left.should.exist;
+        });
+      });
     });
   });
 });

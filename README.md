@@ -18,20 +18,22 @@ $ hkci
 ### Usage
 
 ```
- λ > Maybe.Just('haskind')
+ λ > Data.Maybe.Just('haskind')
 { just: 'haskind' }
- λ > foo = [Maybe.Just('haskind'), Maybe.Nothing(), Maybe.Just(3)]
+
+ λ > foo = [Data.Maybe.Just('haskind'), Data.Maybe.Nothing(), Data.Maybe.Just(3)]
 [ { just: 'haskind' }, { nothing: null }, { just: 3 } ]
- λ > Maybe.catMaybes(foo)
+
+ λ > Data.Maybe.catMaybes(foo)
 [ 'haskind', 3 ]
+ 
  λ >
 ```
 
-To load functions directly into the repl context, use `module` with an
-uppercase module name:
+To load functions directly into the repl context, call it with `module`
 
 ```
- λ > module(EITHER)
+ λ > module(Data.Either)
 ++ Left
 ++ Right
 ++ either
@@ -42,9 +44,23 @@ uppercase module name:
 ++ isLeft
 ++ isRight
 ++ partitionEithers
+(10/10)
 10
+
  λ > Left(1)
 { left: 1 }
+
+ λ > Just('haskind')
+{ just: 'haskind' }
+
+ λ > foo = [Just('haskind'), Nothing(), Just(3)]
+[ { just: 'haskind' }, { nothing: null }, { just: 3 } ]
+
+ λ > catMaybes(foo)
+[ 'haskind', 3 ]
+
+ λ >
+
 ```
 
 ### Cli Options

@@ -4,16 +4,16 @@ const opt = require('node-getopt').create([
     ['h' , 'help'   , 'display this help'],
     ['v' , 'version', 'show version'],
 
-    ['b' , 'bool'   , 'load Data.Bool'],
-    ['e' , 'either' , 'load Data.Either'],
-    ['q' , 'eq'     , 'load Data.Eq'],
-    ['x' , 'ix'     , 'load Data.Ix'],
-    ['l' , 'list'   , 'load Data.List'],
-    ['p' , 'map'    , 'load Data.Map'],
-    ['y' , 'maybe'  , 'load Data.Maybe'],
-    ['s' , 'string' , 'load Data.String'],
-    ['o' , 'ord'    , 'load Data.Ord'],
-    ['t' , 'tuple'  , 'load Data.Tuple']
+    ['b' , 'Bool'   , 'preload Data.Bool'],
+    ['E' , 'Either' , 'preload Data.Either'],
+    ['e' , 'Eq'     , 'preload Data.Eq'],
+    ['x' , 'Ix'     , 'preload Data.Ix'],
+    ['l' , 'List'   , 'preload Data.List'],
+    ['m' , 'Map'    , 'preload Data.Map'],
+    ['M' , 'Maybe'  , 'preload Data.Maybe'],
+    ['s' , 'String' , 'preload Data.String'],
+    ['o' , 'Ord'    , 'preload Data.Ord'],
+    ['T' , 'Tuple'  , 'preload Data.Tuple']
 ]).bindHelp().parseSystem();
 
 module.exports = require('./lib/hkci.js')(opt);
