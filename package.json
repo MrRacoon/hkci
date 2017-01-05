@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npm run mocha",
-    "mocha": "mocha test/**/*.js"
+    "test": "run-s lint mocha",
+    "mocha": "mocha test/**/*.js",
+    "lint": "eslint index.js lib/**/*.js test/**/*.js"
   },
   "keywords": [
     "haskind",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "mocha": "^3.2.0",
+    "npm-run-all": "^4.0.0",
     "should": "^11.1.2"
   }
 }
