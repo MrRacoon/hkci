@@ -30,7 +30,10 @@ $ hkci
  λ >
 ```
 
-To load functions directly into the repl context, call it with `module`
+To load functions directly into the repl context, call it with `module()`.
+
+`++` before the function denotes that the function _is_ available, while the `--`
+denotes that the function has yet to be implemented.
 
 ```
  λ > module(Data.Either)
