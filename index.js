@@ -4,6 +4,8 @@ const opt = require('node-getopt').create([
     ['h' , 'help'   , 'display this help'],
     ['v' , 'version', 'show version'],
 
+    ['D' , 'Data'   , 'preload Data'],
+
     ['b' , 'Bool'   , 'preload Data.Bool'],
     ['E' , 'Either' , 'preload Data.Either'],
     ['e' , 'Eq'     , 'preload Data.Eq'],
