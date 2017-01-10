@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/MrRacoon/hkci#readme",
   "dependencies": {
-    "haskind": "^0.5.1",
+    "haskind": "^0.6.0",
     "node-getopt": "^0.2.3"
   },
   "devDependencies": {
