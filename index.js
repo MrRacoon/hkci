@@ -7,7 +7,6 @@ const opt = require('node-getopt').create([
     ['D' , 'Data' , 'preload Data'],
     ['C' , 'Control' , 'preload Data'],
     ['S' , 'System' , 'preload Data'],
-    ['P' , 'Prelude' , 'preload Prelude'],
 
     ['b' , 'Bool' , 'preload Data.Bool'],
     ['E' , 'Either' , 'preload Data.Either'],
