@@ -1,4 +1,4 @@
-'use strict';
+import parser from './parser';
 
 module.exports = function (opt) {
   var packageJson;
@@ -23,18 +23,29 @@ module.exports = function (opt) {
     haskind     = require('haskind');
   }
 
+  let loadables = parser(haskind, opt);
+
+  Object.keys(loadables).forEach(function (k) {
+    const avail = typeof(loadables[k]) !== 'undefined' || k === 'undefined';
+    console.log('>', avail ? '++' : '--', k); // eslint-disable-line
+  });
+
   var repl = require('repl').start({
     prompt: '[' + packageJson.version + ']' + ' λ > ',
     useColors: true
   });
 
+  const [added, total] = mergeIntoContext(loadables);
+  console.log(`(${added}/${total})`); //eslint-disable-line
+
   // Data, Concurrent, ...
-  Object.keys(haskind).forEach(function (key) {
-    Object.defineProperty(repl.context, key, {
-      get: function () { return haskind[key]; },
-      set: function () { return; }
+  Object.keys(haskind)
+    .forEach(function (key) {
+      Object.defineProperty(repl.context, key, {
+        get: function () { return haskind[key]; },
+        set: function () { return; }
+      });
     });
-  });
 
   // module()
   Object.defineProperty(repl.context, 'module', {
@@ -43,59 +54,28 @@ module.exports = function (opt) {
   });
 
   // Prelude
-  Object.keys(haskind.Prelude).forEach(function (key) {
-    Object.defineProperty(repl.context, key, {
-      get: function () { return haskind.Prelude[key]; },
-      set: function () { return; }
+  Object.keys(haskind.Prelude)
+    .forEach(function (key) {
+      Object.defineProperty(repl.context, key, {
+        get: function () { return haskind.Prelude[key]; },
+        set: function () { return; }
+      });
     });
-  });
 
   // options
-  Object.keys(opt.options).forEach(function (o) {
-    switch (o) {
-      case 'Bool':
-      case 'Either':
-      case 'Enum':
-      case 'Eq':
-      case 'Function':
-      case 'Ix':
-      case 'List':
-      case 'Map':
-      case 'Maybe':
-      case 'Ord':
-      case 'String':
-      case 'Tuple':
-        mergeIntoContext(haskind.Data[o]);
-        break;
-      case 'Control':
-      case 'Data':
-      case 'System':
-        mergeIntoContext(haskind[o]);
-        break;
-      default:
-        break;
-    }
-  });
-
   return repl;
 
   // ===========================================================================
 
   function mergeIntoContext (obj) {
-    var added = [];
+    var added = 0;
     var total = 0;
     Object.keys(obj)
       .forEach(function (key) {
         total += 1;
         repl.context[key] = obj[key];
-        if (repl.context[key]) {
-          added.push(key);
-          console.log('++ %s', key); // eslint-disable-line
-        } else {
-          console.log('-- %s', key); // eslint-disable-line
-        }
+        if (repl.context[key]) { added += 1; }
       });
-    console.log('(%s/%s) ', added.length, total); // eslint-disable-line
-    return added;
+    return [added, total];
   }
 };

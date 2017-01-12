@@ -22,4 +22,4 @@ const opt = require('node-getopt').create([
     ['T' , 'Tuple' , 'preload Data.Tuple']
 ]).bindHelp().parseSystem();
 
-module.exports = require('./lib/hkci.js')(opt);
+module.exports = require('./dist/hkci.js')(opt);
