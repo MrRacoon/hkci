@@ -24,9 +24,9 @@ module.exports = function (packageJson, haskind, opt) {
   });
 
   // Prelude
-  mergeIntoContext(haskind);
-  mergeIntoContext(haskind.Prelude);
-  mergeIntoContext(loadables);
+  mergeIntoContext(repl, haskind);
+  mergeIntoContext(repl, haskind.Prelude);
+  mergeIntoContext(repl, loadables);
 
   // module()
   Object.defineProperty(repl.context, 'module', {
@@ -42,17 +42,10 @@ module.exports = function (packageJson, haskind, opt) {
   return repl;
 
   // ===========================================================================
-
-  function mergeIntoContext(obj) {
-    var added = 0;
-    var total = 0;
-    (0, _keys2.default)(obj).forEach(function (key) {
-      total += 1;
-      repl.context[key] = obj[key];
-      if (repl.context[key]) {
-        added += 1;
-      }
-    });
-    return [added, total];
-  }
 };
+
+function mergeIntoContext(rep, obj) {
+  (0, _keys2.default)(obj).forEach(function (key) {
+    rep.context[key] = obj[key];
+  });
+}
