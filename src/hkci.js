@@ -20,7 +20,7 @@ module.exports = function (packageJson, haskind, opt) {
 
   // module()
   Object.defineProperty(repl.context, 'module', {
-    get: function () { return mergeIntoContext; },
+    get: function () { return mergeIntoContext.bind(null, repl); },
     set: function () { return; }
   });
 

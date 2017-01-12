@@ -31,7 +31,7 @@ module.exports = function (packageJson, haskind, opt) {
   // module()
   Object.defineProperty(repl.context, 'module', {
     get: function get() {
-      return mergeIntoContext;
+      return mergeIntoContext.bind(null, repl);
     },
     set: function set() {
       return;

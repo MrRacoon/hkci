@@ -58,7 +58,7 @@ describe('hkci', () => {
     describe('module', () => {
       describe('(Data.Either)', () => {
         before(() => {
-          repl.context.module(repl.context.Data.Either);
+          repl.context.module(repl, repl.context.Data.Either);
         });
         it('includes Right', () => {
           repl.context.Right.should.exist;
