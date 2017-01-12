@@ -1,3 +1,5 @@
+'use strict';
+
 const opt = require('node-getopt').create([
     ['c' , 'cwd' , 'run hkci in the context of a haskind project'],
     ['h' , 'help' , 'display this help'],
