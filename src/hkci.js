@@ -1,28 +1,6 @@
 import parser from './parser';
 
-module.exports = function (opt) {
-  var packageJson;
-
-  if (opt.options.version) {
-    packageJson = require('../package.json');
-    console.log(packageJson.name, packageJson.version) // eslint-disable-line
-    return;
-  }
-
-  var haskind;
-  if (opt.options.cwd) {
-    console.info('loading local haskind:', process.cwd()); // eslint-disable-line
-    packageJson = require(process.cwd() + '/package.json');
-    if (packageJson.name === 'haskind') {
-      haskind = require(process.cwd() + '/index.js');
-    }
-  }
-
-  if (!haskind) {
-    packageJson = require('haskind/package.json');
-    haskind     = require('haskind');
-  }
-
+module.exports = function (packageJson, haskind, opt) {
   let loadables = parser(haskind, opt);
 
   Object.keys(loadables).forEach(function (k) {
@@ -35,32 +13,16 @@ module.exports = function (opt) {
     useColors: true
   });
 
-  const [added, total] = mergeIntoContext(loadables);
-  console.log(`(${added}/${total})`); //eslint-disable-line
-
-  // Data, Concurrent, ...
-  Object.keys(haskind)
-    .forEach(function (key) {
-      Object.defineProperty(repl.context, key, {
-        get: function () { return haskind[key]; },
-        set: function () { return; }
-      });
-    });
+  // Prelude
+  mergeIntoContext(haskind);
+  mergeIntoContext(haskind.Prelude);
+  mergeIntoContext(loadables);
 
   // module()
   Object.defineProperty(repl.context, 'module', {
     get: function () { return mergeIntoContext; },
     set: function () { return; }
   });
-
-  // Prelude
-  Object.keys(haskind.Prelude)
-    .forEach(function (key) {
-      Object.defineProperty(repl.context, key, {
-        get: function () { return haskind.Prelude[key]; },
-        set: function () { return; }
-      });
-    });
 
   // options
   return repl;
