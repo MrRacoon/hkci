@@ -18,8 +18,10 @@ module.exports = function (packageJson, haskind, opt) {
     console.log('>', avail ? '++' : '--', k); // eslint-disable-line
   });
 
+  var prompt = opt.options.showVersion ? '[' + packageJson.version + ']' + ' λ > ' : ' λ > ';
+
   var repl = require('repl').start({
-    prompt: '[' + packageJson.version + ']' + ' λ > ',
+    prompt: prompt,
     useColors: true
   });
 

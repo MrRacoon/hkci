@@ -8,7 +8,7 @@ Command line interpreter for [haskind](https://github.com/MrRacoon/haskind).
 This tool is used to explore the haskind library. haskind modules are loaded in
 the repl for you from the get go!
 
-### install
+### Install
 
 ```bash
 $ npm install -g hkci

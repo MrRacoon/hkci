@@ -2,8 +2,7 @@
 
 const opt = require('node-getopt').create([
     ['c' , 'cwd' , 'run hkci in the context of a haskind project'],
-    ['h' , 'help' , 'display this help'],
-    ['v' , 'version', 'show version'],
+    ['V' , 'showVersion', 'show version of current haskind on the prompt'],
 
     ['D' , 'Data' , 'preload Data'],
     ['C' , 'Control' , 'preload Data'],
@@ -20,7 +19,10 @@ const opt = require('node-getopt').create([
     ['M' , 'Maybe' , 'preload Data.Maybe'],
     ['o' , 'Ord' , 'preload Data.Ord'],
     ['s' , 'String' , 'preload Data.String'],
-    ['T' , 'Tuple' , 'preload Data.Tuple']
+    ['T' , 'Tuple' , 'preload Data.Tuple'],
+
+    ['h' , 'help' , 'display this help'],
+    ['v' , 'version', 'show version']
 ]).bindHelp().parseSystem();
 
 if (opt.options.version) {
