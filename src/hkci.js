@@ -32,8 +32,11 @@ module.exports = function (packageJson, haskind, opt) {
 };
 
 function mergeIntoContext (rep, obj) {
+  let loaded = [];
   Object.keys(obj)
     .forEach(function (key) {
       rep.context[key] = obj[key];
+      if (rep.context[key]) loaded.push(key);
     });
+  return loaded;
 }
