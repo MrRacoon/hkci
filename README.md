@@ -17,53 +17,31 @@ $ hkci
 
 ### Usage
 
+Functions can be found in their appropriate module. To load functions directly
+into the repl context, call it with `module()`.
+
 ```
  λ > Data.Maybe.Just('haskind')
 { just: 'haskind' }
 
- λ > foo = [Data.Maybe.Just('haskind'), Data.Maybe.Nothing(), Data.Maybe.Just(3)]
-[ { just: 'haskind' }, { nothing: null }, { just: 3 } ]
-
- λ > Data.Maybe.catMaybes(foo)
-[ 'haskind', 3 ]
-
- λ >
-```
-
-To load functions directly into the repl context, call it with `module()`.
-
-`++` before the function denotes that the function _is_ available, while the `--`
-denotes that the function has yet to be implemented.
-
-```
- λ > module(Data.Either)
-++ Left
-++ Right
-++ either
-++ fromLeft
-++ fromRight
-++ lefts
-++ rights
-++ isLeft
-++ isRight
-++ partitionEithers
-(10/10)
-10
-
- λ > Left(1)
-{ left: 1 }
-
- λ > Just('haskind')
-{ just: 'haskind' }
+ λ > module(Data.Maybe)
+[ 'Just',
+  'Nothing',
+  'maybe',
+  'isJust',
+  'isNothing',
+  'fromJust',
+  'fromMaybe',
+  'listToMaybe',
+  'maybeToList',
+  'catMaybes',
+  'mapMaybe' ]
 
  λ > foo = [Just('haskind'), Nothing(), Just(3)]
 [ { just: 'haskind' }, { nothing: null }, { just: 3 } ]
 
- λ > catMaybes(foo)
+ λ > Data.Maybe.catMaybes(foo)
 [ 'haskind', 3 ]
-
- λ >
-
 ```
 
 ### Cli Options
