@@ -40,6 +40,16 @@ module.exports = function (packageJson, haskind, opt) {
     }
   });
 
+  // m()
+  Object.defineProperty(repl.context, 'm', {
+    get: function get() {
+      return mergeIntoContext.bind(null, repl);
+    },
+    set: function set() {
+      return;
+    }
+  });
+
   // options
   return repl;
 

@@ -28,6 +28,12 @@ module.exports = function (packageJson, haskind, opt) {
     set: function () { return; }
   });
 
+  // m()
+  Object.defineProperty(repl.context, 'm', {
+    get: function () { return mergeIntoContext.bind(null, repl); },
+    set: function () { return; }
+  });
+
   // options
   return repl;
 
