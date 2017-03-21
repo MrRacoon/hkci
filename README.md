@@ -48,6 +48,27 @@ into the repl context, call it with `module()`.
 
 Various options are available, use `hkci -h` for more info.
 
+### ~/.hkcirc
+
+You can unlock more features using an rc file. options include:
+
+* vim - adds readline-vim support
+* bindings - vim keybindings to add to readline
+* options - set cli options (by long name)
+
+```json
+{
+    "vim": true,
+    "bindings": {
+        "insert": [ "kj", "esc" ] ]
+    },
+    "options": {
+        "Enum": true,
+        "Ix": true
+    }
+}
+
+```
 ## License
 
 [MIT License](http://opensource.org/licenses/MIT)

@@ -1,6 +1,8 @@
 const should = require('should');
-const repl = require('../index');
+const createRepl = require('../index').default;
 should();
+
+const repl = createRepl();
 
 describe('hkci', () => {
   describe('context', () => {

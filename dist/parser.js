@@ -15,9 +15,9 @@ var _keys2 = _interopRequireDefault(_keys);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var parser = exports.parser = function parser(haskind, opt) {
+var parser = exports.parser = function parser(haskind, options) {
   var res = {};
-  (0, _keys2.default)(opt.options).forEach(function (o) {
+  (0, _keys2.default)(options).forEach(function (o) {
     switch (o) {
       case 'Control':
       case 'Data':

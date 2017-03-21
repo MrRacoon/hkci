@@ -1,6 +1,6 @@
-export const parser = function parser(haskind, opt) {
+export const parser = function parser(haskind, options) {
   let res = { };
-  Object.keys(opt.options)
+  Object.keys(options)
     .forEach(function (o) {
       switch (o) {
         case 'Control':
