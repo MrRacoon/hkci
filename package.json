@@ -1,6 +1,6 @@
 {
   "name": "hkci",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Command line interpreter for haskind",
   "main": "index.js",
   "scripts": {
