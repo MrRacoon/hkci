@@ -37,7 +37,10 @@ export default () => {
   let packageJson;
   let haskind;
 
-  const options = { ...config.options, ...flags.options };
+  const options = {
+    ...config.options,
+    ...flags.options
+  };
 
   if (options.cwd) {
     console.info('loading local haskind:', process.cwd()); // eslint-disable-line
@@ -52,15 +55,11 @@ export default () => {
     haskind     = require('haskind');
   }
 
-  if (options.version) {
-    console.log(packageJson.name, packageJson.version); // eslint-disable-line
-    return {};
-  }
-
   const loadables = parser(haskind, options);
 
   const opts = {
     ...config,
+    argv: flags.argv,
     options,
     packageJson,
     haskind,

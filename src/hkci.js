@@ -1,5 +1,11 @@
 module.exports = function (config) {
-  const { packageJson, haskind, options, loadables } = config;
+  let loaded;
+  const { packageJson, haskind, options, loadables, argv } = config;
+
+  if (options.version) {
+    console.log(packageJson.name, packageJson.version); // eslint-disable-line
+    return {};
+  }
 
   Object.keys(loadables).forEach(function (k) {
     const avail = typeof(loadables[k]) !== 'undefined' || k === 'undefined';
@@ -26,6 +32,15 @@ module.exports = function (config) {
     });
   }
 
+  if (argv.length) {
+    load(argv[0]);
+  }
+
+  repl.defineCommand('r', reload);
+  repl.defineCommand('reload', reload);
+  repl.defineCommand('l', load);
+  repl.defineCommand('load', load);
+
   // module()
   define(repl, 'module', mergeIntoContext.bind(null, repl));
   define(repl, 'm', mergeIntoContext.bind(null, repl));
@@ -38,6 +53,27 @@ module.exports = function (config) {
   // options
   return repl;
 
+  function load(file) {
+    loaded = file || loaded;
+    const lFile = process.cwd() + '/' + file;
+    try {
+      mergeIntoContext(repl, req(lFile));
+      console.log('loaded', lFile); // eslint-disable-line
+    } catch (e) {
+      console.log('e', e); // eslint-disable-line
+      console.error('could not load', lFile); // eslint-disable-line
+      loaded = null;
+      return;
+    }
+  }
+
+  function reload () {
+    if (loaded) {
+      load(loaded);
+    } else {
+      console.log('no file loaded'); // eslint-disable-line
+    }
+  }
 };
 
 function define(repl, name, val) {
@@ -55,4 +91,10 @@ function mergeIntoContext (repl, obj) {
       if (repl.context[key]) loaded.push(key);
     });
   return loaded;
+}
+
+// Props to: http://stackoverflow.com/a/16060619
+function req (module) {
+  delete require.cache[require.resolve(module)];
+  return require(module);
 }
