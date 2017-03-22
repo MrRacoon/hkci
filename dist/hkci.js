@@ -82,10 +82,12 @@ module.exports = function (config) {
     try {
       mergeIntoContext(repl, req(lFile));
       console.log('loaded', lFile); // eslint-disable-line
+      repl.displayPrompt();
     } catch (e) {
       console.log('e', e); // eslint-disable-line
       console.error('could not load', lFile); // eslint-disable-line
       loaded = null;
+      repl.displayPrompt();
       return;
     }
   }
@@ -93,8 +95,10 @@ module.exports = function (config) {
   function reload() {
     if (loaded) {
       load(loaded);
+      repl.displayPrompt();
     } else {
       console.log('no file loaded'); // eslint-disable-line
+      repl.displayPrompt();
     }
   }
 };
