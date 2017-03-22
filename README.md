@@ -60,7 +60,7 @@ You can unlock more features using an rc file. options include:
 {
     "vim": true,
     "bindings": {
-        "insert": [ "kj", "esc" ] ]
+        "insert": [ "kj", "esc" ]
     },
     "options": {
         "Enum": true,
