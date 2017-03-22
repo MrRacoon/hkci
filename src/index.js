@@ -14,8 +14,8 @@ export default () => {
     ['V' , 'showVersion', 'show version of current haskind on the prompt'],
 
     ['D' , 'Data' , 'preload Data'],
-    ['C' , 'Control' , 'preload Data'],
-    ['S' , 'System' , 'preload Data'],
+    ['C' , 'Control' , 'preload Control'],
+    ['S' , 'System' , 'preload System'],
 
     ['b' , 'Bool' , 'preload Data.Bool'],
     ['E' , 'Either' , 'preload Data.Either'],
