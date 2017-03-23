@@ -17,7 +17,8 @@
     "test": "run-s lint test:src build:dist test:dist",
     "dev": "run-s lint clean:dist build:dist test:dist start",
     "watch": "npm run test:watch",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "prepublish": "run-s build"
   },
   "keywords": [
     "haskind",
@@ -53,7 +54,6 @@
     "readline-vim": "^0.3.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",

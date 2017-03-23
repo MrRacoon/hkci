@@ -7,7 +7,9 @@ module.exports = function (config) {
     ? '[' + packageJson.version + ']' + _prompt
     : _prompt;
 
+  //
   if (options.version) {
+    console.log('hkci', require(__dirname + '/../package.json').version); // eslint-disable-line
     console.log(packageJson.name, packageJson.version); // eslint-disable-line
     return {};
   }
@@ -15,6 +17,7 @@ module.exports = function (config) {
   const repl = require('repl')
     .start({ prompt: _prompt, useColors: true });
 
+  // auto load file specified by argv
   if (argv.length) { load(argv[0]); }
 
   // add vim if configured
@@ -28,28 +31,35 @@ module.exports = function (config) {
     });
   }
 
+  // file (re)loading
   repl.defineCommand('r', reload);
   repl.defineCommand('reload', reload);
   repl.defineCommand('l', load);
   repl.defineCommand('load', load);
-  repl.defineCommand('m', mergeIntoContext.bind(null, repl));
-  repl.defineCommand('module', mergeIntoContext.bind(null, repl));
 
   // Prelude
   mergeIntoContext(repl, haskind);
   mergeIntoContext(repl, haskind.Prelude);
   mergeIntoContext(repl, loadables);
 
-  // options
+  // Module loader
+  define(repl, 'm', mergeIntoContext.bind(null, repl));
+  define(repl, 'module', mergeIntoContext.bind(null, repl));
+
   return repl;
 
   function load(file) {
     loaded = file || loaded;
     const lFile = process.cwd() + '/' + file;
     try {
-      mergeIntoContext(repl, req(lFile));
-      console.log('Ok, modules loaded:', lFile); // eslint-disable-line
-      repl.displayPrompt();
+      const f = req(lFile);
+      if (typeof f === 'object') {
+        mergeIntoContext(repl, f);
+        console.log('Ok, modules loaded:', lFile); // eslint-disable-line
+        repl.displayPrompt();
+      } else {
+        console.log('module must export an object'); // eslint-disable-line
+      }
     } catch (e) {
       console.log('e', e); // eslint-disable-line
       console.error('Failed, modules loaded: none'); // eslint-disable-line
@@ -68,6 +78,13 @@ module.exports = function (config) {
     }
   }
 };
+
+function define(repl, name, val) {
+  Object.defineProperty(repl.context, name, {
+    get: function () { return val; },
+    set: function () { return; }
+  });
+}
 
 function mergeIntoContext (repl, obj) {
   let loaded = [];
