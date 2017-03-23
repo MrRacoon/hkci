@@ -1,9 +1,5 @@
 'use strict';
 
-var _defineProperty = require('babel-runtime/core-js/object/define-property');
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
 var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
@@ -20,25 +16,23 @@ module.exports = function (config) {
       haskind = config.haskind,
       options = config.options,
       loadables = config.loadables,
-      argv = config.argv;
+      argv = config.argv,
+      prompt = config.prompt;
 
+
+  var _prompt = prompt || ' λ > ';
+  _prompt = options.showVersion ? '[' + packageJson.version + ']' + _prompt : _prompt;
 
   if (options.version) {
     console.log(packageJson.name, packageJson.version); // eslint-disable-line
     return {};
   }
 
-  (0, _keys2.default)(loadables).forEach(function (k) {
-    var avail = typeof loadables[k] !== 'undefined' || k === 'undefined';
-    console.log('>', avail ? '++' : '--', k); // eslint-disable-line
-  });
+  var repl = require('repl').start({ prompt: _prompt, useColors: true });
 
-  var prompt = options.showVersion ? '[' + packageJson.version + ']' + ' λ > ' : ' λ > ';
-
-  var repl = require('repl').start({
-    prompt: prompt,
-    useColors: true
-  });
+  if (argv.length) {
+    load(argv[0]);
+  }
 
   // add vim if configured
   if (config.vim) {
@@ -55,18 +49,12 @@ module.exports = function (config) {
     });
   }
 
-  if (argv.length) {
-    load(argv[0]);
-  }
-
   repl.defineCommand('r', reload);
   repl.defineCommand('reload', reload);
   repl.defineCommand('l', load);
   repl.defineCommand('load', load);
-
-  // module()
-  define(repl, 'module', mergeIntoContext.bind(null, repl));
-  define(repl, 'm', mergeIntoContext.bind(null, repl));
+  repl.defineCommand('m', mergeIntoContext.bind(null, repl));
+  repl.defineCommand('module', mergeIntoContext.bind(null, repl));
 
   // Prelude
   mergeIntoContext(repl, haskind);
@@ -81,12 +69,11 @@ module.exports = function (config) {
     var lFile = process.cwd() + '/' + file;
     try {
       mergeIntoContext(repl, req(lFile));
-      console.log('loaded', lFile); // eslint-disable-line
+      console.log('Ok, modules loaded:', lFile); // eslint-disable-line
       repl.displayPrompt();
     } catch (e) {
       console.log('e', e); // eslint-disable-line
-      console.error('could not load', lFile); // eslint-disable-line
-      loaded = null;
+      console.error('Failed, modules loaded: none'); // eslint-disable-line
       repl.displayPrompt();
       return;
     }
@@ -97,22 +84,11 @@ module.exports = function (config) {
       load(loaded);
       repl.displayPrompt();
     } else {
-      console.log('no file loaded'); // eslint-disable-line
+      console.log('Ok, modules loaded: none'); // eslint-disable-line
       repl.displayPrompt();
     }
   }
 };
-
-function define(repl, name, val) {
-  (0, _defineProperty2.default)(repl.context, name, {
-    get: function get() {
-      return val;
-    },
-    set: function set() {
-      return;
-    }
-  });
-}
 
 function mergeIntoContext(repl, obj) {
   var loaded = [];

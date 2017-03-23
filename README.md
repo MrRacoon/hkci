@@ -20,7 +20,7 @@ $ hkci
 Functions can be found in their appropriate module. To load functions directly
 into the repl context, call it with `module()`.
 
-```
+```shell
  λ > Data.Maybe.Just('haskind')
 { just: 'haskind' }
 
@@ -50,24 +50,26 @@ Various options are available, use `hkci -h` for more info.
 
 ### File loading
 
-Files can be loaded into the repl using both the comman line and through REPL
+Files can be loaded into the repl using both the command line and through REPL
 commands.
 
 `hkci relative/path.js`
 
 Loaded files can then be reloaded using `.reload` or `.r` for short. To load
-another file, use `.load [filename]` or `.l [filename]` for short.
+another file, use `.load [filename]` or `.l [filename]`.
 
 ### ~/.hkcirc
 
 You can unlock more features using an rc file. options include:
 
+* prompt - change the default prompt
 * vim - adds readline-vim support
 * bindings - vim keybindings to add to readline
 * options - set cli options (by long name)
 
 ```json
 {
+    "prompt": "Main> ",
     "vim": true,
     "bindings": {
         "insert": [ "kj", "esc" ]
