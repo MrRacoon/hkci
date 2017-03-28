@@ -44,14 +44,19 @@ $ hkci
 Various options are available, use `hkci -h` for more info.
 
 ```shell
-Usage: node hkci
+$> hkci -h
+Usage: hkci [-cdhv] [-l local] [-g global] [file.js]
+node repl creation tool
 
-    -c, --cwd               load the current directory (using ./package.json)
-    -l, --local=PKG_NAME+   load a module from local node_modules
-    -g, --global=PKG_NAME+  load a module from global node_modules
-    -d, --directly          load all modules directly into the repl context
-    -h, --help              display this help
-    -v, --version           show version
+  -c, --cwd               load the current directory (using ./package.json)
+  -l, --local=PKG_NAME+   load a module from local node_modules
+  -g, --global=PKG_NAME+  load a module from global node_modules
+  -d, --directly          load all modules directly into the repl context
+  -h, --help              display this help
+  -v, --version           show version
+
+Installation: npm install node-getopt
+Respository:  https://github.com/MrRacoon/hkci
 ```
 
 ### File loading

@@ -1,5 +1,6 @@
 import hkci from './hkci';
 import path from 'path';
+import Getopt from 'node-getopt';
 
 export default () => {
 
@@ -9,7 +10,7 @@ export default () => {
     global: []
   });
 
-  const flags = require('node-getopt').create([
+  const flags = new Getopt([
     ['c', 'cwd' , 'load the current directory (using ./package.json)'],
     ['l', 'local=PKG_NAME+', 'load a module from local node_modules'],
     ['g', 'global=PKG_NAME+', 'load a module from global node_modules'],
@@ -18,7 +19,19 @@ export default () => {
 
     ['h' , 'help' , 'display this help'],
     ['v' , 'version', 'show version']
-  ]).bindHelp().parseSystem();
+  ]);
+
+  flags.setHelp(
+    'Usage: hkci [-cdhv] [-l local] [-g global] [file.js]\n' +
+    'node repl creation tool\n' +
+    '\n' +
+    '[[OPTIONS]]\n' +
+    '\n' +
+    'Installation: npm install hkci\n' +
+    'Respository:  https://github.com/MrRacoon/hkci'
+  );
+
+  flags.bindHelp().parseSystem();
 
   const options = {
     ...config.options,
