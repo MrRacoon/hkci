@@ -1,21 +1,17 @@
-module.exports = function (config) {
+module.exports = function (init) {
   let loaded;
-  const { packageJson, haskind, options, loadables, argv, prompt } = config;
+  const { config, argv, options, loadables } = init;
 
-  let _prompt = prompt || ' λ > ';
-  _prompt = options.showVersion
-    ? '[' + packageJson.version + ']' + _prompt
-    : _prompt;
-
-  //
   if (options.version) {
     console.log('hkci', require(__dirname + '/../package.json').version); // eslint-disable-line
-    console.log(packageJson.name, packageJson.version); // eslint-disable-line
-    return {};
+    process.exit(0);
   }
 
   const repl = require('repl')
-    .start({ prompt: _prompt, useColors: true });
+    .start({
+      prompt : config.prompt || ' λ > ',
+      useColors : true,
+    });
 
   // auto load file specified by argv
   if (argv.length) { load(argv[0]); }
@@ -31,16 +27,26 @@ module.exports = function (config) {
     });
   }
 
-  // file (re)loading
-  repl.defineCommand('r', reload);
-  repl.defineCommand('reload', reload);
+  // File load
   repl.defineCommand('l', load);
   repl.defineCommand('load', load);
 
-  // Prelude
-  mergeIntoContext(repl, haskind);
-  mergeIntoContext(repl, haskind.Prelude);
+  // File reload
+  repl.defineCommand('r', reload);
+  repl.defineCommand('reload', reload);
+
+  // Quit out
+  repl.defineCommand('q', quit);
+  repl.defineCommand('quit', quit);
+
+  // auto-merged modules
   mergeIntoContext(repl, loadables);
+
+  if (options.directly) {
+    Object.keys(loadables).map(k => {
+      mergeIntoContext(repl, loadables[k]);
+    });
+  }
 
   // Module loader
   define(repl, 'm', mergeIntoContext.bind(null, repl));
@@ -87,17 +93,20 @@ function define(repl, name, val) {
 }
 
 function mergeIntoContext (repl, obj) {
-  let loaded = [];
-  Object.keys(obj)
-    .forEach(function (key) {
+  Object.keys(obj).forEach(
+    function addToContext(key) {
       repl.context[key] = obj[key];
-      if (repl.context[key]) loaded.push(key);
-    });
-  return loaded;
+    }
+  );
 }
 
 // Props to: http://stackoverflow.com/a/16060619
 function req (module) {
   delete require.cache[require.resolve(module)];
   return require(module);
+}
+
+function quit () {
+  console.log('Leaving HKCI'); // eslint-disable-line
+  process.exit(0);
 }

@@ -3,10 +3,7 @@
 [![dependencies Status](https://david-dm.org/MrRacoon/haskind/status.svg)](https://david-dm.org/MrRacoon/hkci)
 [![Build Status](https://travis-ci.org/MrRacoon/hkci.svg?branch=master)](https://travis-ci.org/MrRacoon/hkci)
 
-Command line interpreter for [haskind](https://github.com/MrRacoon/haskind).
-
-This tool is used to explore the haskind library. haskind modules are loaded in
-the repl for you from the get go!
+hkci is a *repl sandbox creation* tool (now).
 
 ### Install
 
@@ -17,36 +14,35 @@ $ hkci
 
 ### Usage
 
-Functions can be found in their appropriate module. To load functions directly
-into the repl context, call it with `module()`.
+**load a global package**
 
-```shell
- λ > Data.Maybe.Just('haskind')
-{ just: 'haskind' }
+`hkci -g global_pkg`
+`hkci --global haskind`
 
- λ > module(Data.Maybe)
-[ 'Just',
-  'Nothing',
-  'maybe',
-  'isJust',
-  'isNothing',
-  'fromJust',
-  'fromMaybe',
-  'listToMaybe',
-  'maybeToList',
-  'catMaybes',
-  'mapMaybe' ]
+**load a local package** via `require(`./node_modules/${NAME}`)`
 
- λ > foo = [Just('haskind'), Nothing(), Just(3)]
-[ { just: 'haskind' }, { nothing: null }, { just: 3 } ]
+`hkci -l LOCAL_PKG`
+`hkci --local lodash`
 
- λ > Data.Maybe.catMaybes(foo)
-[ 'haskind', 3 ]
-```
+**load the current package** via `require('./package.json').main`
+
+`hkci -c`
+`hkci --cwd`
 
 ### Cli Options
 
 Various options are available, use `hkci -h` for more info.
+
+```shell
+Usage: node hkci
+
+    -c, --cwd               load the current directory (using ./package.json)
+    -l, --local=PKG_NAME+   load a module from local node_modules
+    -g, --global=PKG_NAME+  load a module from global node_modules
+    -d, --directly          load all modules directly into the repl context
+    -h, --help              display this help
+    -v, --version           show version
+```
 
 ### File loading
 
@@ -60,26 +56,26 @@ another file, use `.load [filename]` or `.l [filename]`.
 
 ### ~/.hkcirc
 
-You can unlock more features using an rc file. options include:
+You can unlock more features using an *rc* file. options include:
 
 * prompt - change the default prompt
 * vim - adds readline-vim support
 * bindings - vim keybindings to add to readline
-* options - set cli options (by long name)
+* global - Automatically load the list of global modules
 
 ```json
 {
     "prompt": "Main> ",
     "vim": true,
     "bindings": {
-        "insert": [ "kj", "esc" ]
+        "insert": [
+          [ "kj", "esc" ]
+        ]
     },
-    "options": {
-        "Enum": true,
-        "Ix": true
-    }
+    "global": [
+      "haskind"
+    ]
 }
-
 ```
 ## License
 
