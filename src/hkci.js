@@ -13,8 +13,12 @@ module.exports = function (init) {
       useColors : true,
     });
 
+  const l = (file) => {
+    loaded = load(repl, loaded, file);
+  };
+
   // auto load file specified by argv
-  if (argv.length) { load(argv[0]); }
+  if (argv.length) { l(argv[0]); }
 
   // add vim if configured
   if (config.vim) {
@@ -28,8 +32,8 @@ module.exports = function (init) {
   }
 
   // File load
-  repl.defineCommand('l', load);
-  repl.defineCommand('load', load);
+  repl.defineCommand('l', l);
+  repl.defineCommand('load', l);
 
   // File reload
   repl.defineCommand('r', reload);
@@ -42,6 +46,7 @@ module.exports = function (init) {
   // auto-merged modules
   mergeIntoContext(repl, loadables);
 
+  // apply to context if specified
   if (options.directly) {
     Object.keys(loadables).map(k => {
       mergeIntoContext(repl, loadables[k]);
@@ -54,29 +59,10 @@ module.exports = function (init) {
 
   return repl;
 
-  function load(file) {
-    loaded = file || loaded;
-    const lFile = process.cwd() + '/' + file;
-    try {
-      const f = req(lFile);
-      if (typeof f === 'object') {
-        mergeIntoContext(repl, f);
-        console.log('Ok, modules loaded:', lFile); // eslint-disable-line
-        repl.displayPrompt();
-      } else {
-        console.log('module must export an object'); // eslint-disable-line
-      }
-    } catch (e) {
-      console.log('e', e); // eslint-disable-line
-      console.error('Failed, modules loaded: none'); // eslint-disable-line
-      repl.displayPrompt();
-      return;
-    }
-  }
 
   function reload () {
     if (loaded) {
-      load(loaded);
+      l(loaded);
       repl.displayPrompt();
     } else {
       console.log('Ok, modules loaded: none'); // eslint-disable-line
@@ -84,6 +70,27 @@ module.exports = function (init) {
     }
   }
 };
+
+function load(repl, loaded, file) {
+  const toLoad = file || loaded;
+  const lFile = process.cwd() + '/' + toLoad;
+  try {
+    const f = req(lFile);
+    if (typeof f === 'object') {
+      mergeIntoContext(repl, f);
+      console.log('Ok, modules loaded:', lFile); // eslint-disable-line
+      repl.displayPrompt();
+    } else {
+      console.log('module must export an object'); // eslint-disable-line
+    }
+    return toLoad;
+  } catch (e) {
+    console.log('e', e); // eslint-disable-line
+    console.error('Failed, modules loaded: none'); // eslint-disable-line
+    repl.displayPrompt();
+    return toLoad;
+  }
+}
 
 function define(repl, name, val) {
   Object.defineProperty(repl.context, name, {

@@ -19,9 +19,7 @@ export default () => {
 
     ['h' , 'help' , 'display this help'],
     ['v' , 'version', 'show version']
-  ]);
-
-  flags.setHelp(
+  ]).setHelp(
     'Usage: hkci [-cdhv] [-l local] [-g global] [file.js]\n' +
     'node repl creation tool\n' +
     '\n' +
@@ -29,9 +27,7 @@ export default () => {
     '\n' +
     'Installation: npm install hkci\n' +
     'Respository:  https://github.com/MrRacoon/hkci'
-  );
-
-  flags.bindHelp().parseSystem();
+  ).bindHelp().parseSystem();
 
   const options = {
     ...config.options,
@@ -47,18 +43,30 @@ export default () => {
 
   if (options.global) {
     options.global.forEach(pkg => {
-      loadables = Object.assign({}, loadables, load(pkg));
+      try {
+        loadables = Object.assign({}, loadables, load(pkg));
+      } catch (e) {
+        console.error(e); // eslint-disable-line
+      }
     });
   }
 
   if (options.local) {
     options.local.forEach(pkg => {
-      loadables = Object.assign({}, loadables, load(pkg, './node_modules'));
+      try {
+        loadables = Object.assign({}, loadables, load(pkg, './node_modules'));
+      } catch (e) {
+        console.error(e); // eslint-disable-line
+      }
     });
   }
 
   if (options.cwd) {
-    loadables = Object.assign({}, loadables, load());
+    try {
+      loadables = Object.assign({}, loadables, load());
+    } catch (e) {
+      console.error(e); // eslint-disable-line
+    }
   }
 
   const opts = {
