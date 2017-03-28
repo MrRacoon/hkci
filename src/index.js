@@ -11,16 +11,17 @@ export default () => {
   });
 
   const flags = new Getopt([
-    ['c', 'cwd' , 'load the current directory (using ./package.json)'],
-    ['l', 'local=PKG_NAME+', 'load a module from local node_modules'],
-    ['g', 'global=PKG_NAME+', 'load a module from global node_modules'],
+    ['c', 'cwd' , 'Load the current directory (using ./package.json).'],
+    ['l', 'local=PKG_NAME+', 'Load a module from local node_modules.'],
+    ['g', 'global=PKG_NAME+', 'Load a module from global node_modules.'],
 
-    ['d', 'directly', 'load all modules directly into the repl context'],
+    ['d', 'directly', 'Load all modules directly into the repl context.'],
+    ['n', 'vanilla', 'Prevents all modules from being loaded. Period.'],
 
-    ['h' , 'help' , 'display this help'],
-    ['v' , 'version', 'show version']
+    ['h' , 'help' , 'Display this help.'],
+    ['v' , 'version', 'Show version.']
   ]).setHelp(
-    'Usage: hkci [-cdhv] [-l local] [-g global] [file.js]\n' +
+    'Usage: hkci [-cdhnv] [-l local] [-g global] [file.js]\n' +
     'node repl creation tool\n' +
     '\n' +
     '[[OPTIONS]]\n' +
@@ -36,12 +37,11 @@ export default () => {
       ...config.global,
       ...(flags.options.global || [])
     ]
-
   };
 
   let loadables = {};
 
-  if (options.global) {
+  if (!options.vanilla && options.global) {
     options.global.forEach(pkg => {
       try {
         loadables = Object.assign({}, loadables, load(pkg));
@@ -51,7 +51,7 @@ export default () => {
     });
   }
 
-  if (options.local) {
+  if (!options.vanilla && options.local) {
     options.local.forEach(pkg => {
       try {
         loadables = Object.assign({}, loadables, load(pkg, './node_modules'));
@@ -61,7 +61,7 @@ export default () => {
     });
   }
 
-  if (options.cwd) {
+  if (!options.vanilla && options.cwd) {
     try {
       loadables = Object.assign({}, loadables, load());
     } catch (e) {

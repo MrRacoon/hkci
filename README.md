@@ -45,17 +45,18 @@ Various options are available, use `hkci -h` for more info.
 
 ```shell
 $> hkci -h
-Usage: hkci [-cdhv] [-l local] [-g global] [file.js]
+Usage: hkci [-cdhnv] [-l local] [-g global] [file.js]
 node repl creation tool
 
-  -c, --cwd               load the current directory (using ./package.json)
-  -l, --local=PKG_NAME+   load a module from local node_modules
-  -g, --global=PKG_NAME+  load a module from global node_modules
-  -d, --directly          load all modules directly into the repl context
-  -h, --help              display this help
-  -v, --version           show version
+  -c, --cwd               Load the current directory (using ./package.json).
+  -l, --local=PKG_NAME+   Load a module from local node_modules.
+  -g, --global=PKG_NAME+  Load a module from global node_modules.
+  -d, --directly          Load all modules directly into the repl context.
+  -n, --vanilla           Prevents all modules from being loaded. Period.
+  -h, --help              Display this help.
+  -v, --version           Show version.
 
-Installation: npm install node-getopt
+Installation: npm install hkci
 Respository:  https://github.com/MrRacoon/hkci
 ```
 
