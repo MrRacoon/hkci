@@ -14,20 +14,30 @@ $ hkci
 
 ### Usage
 
+**load a file directly into the repl context**
+
+* `hkci SOME_FILE`
+* `hkci index.js`
+
 **load a global package**
 
-`hkci -g global_pkg`
-`hkci --global haskind`
+* `hkci -g GLOBAL_PKG`
+* `hkci --global haskind`
+
+**load a global package and merge into the repl context**
+
+* `hkci --global GLOBAL_PKG --directly`
+* `hkci -g haskind -d`
 
 **load a local package** via `require('./node_modules/${NAME}')`
 
-`hkci -l LOCAL_PKG`
-`hkci --local lodash`
+* `hkci -l LOCAL_PKG`
+* `hkci --local lodash`
 
 **load the current package** via `require('./package.json').main`
 
-`hkci -c`
-`hkci --cwd`
+* `hkci -c`
+* `hkci --cwd`
 
 ### Cli Options
 
