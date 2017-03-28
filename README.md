@@ -19,7 +19,7 @@ $ hkci
 `hkci -g global_pkg`
 `hkci --global haskind`
 
-**load a local package** via `require(`./node_modules/${NAME}`)`
+**load a local package** via `require('./node_modules/${NAME}')`
 
 `hkci -l LOCAL_PKG`
 `hkci --local lodash`
