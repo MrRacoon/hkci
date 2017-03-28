@@ -14,7 +14,7 @@
     "test:src": "NODE_PATH=$PWD/src mocha test/**/*.js",
     "test:dist": "NODE_PATH=$PWD/dist mocha test/**/*.js",
     "test:watch": "NODE_PATH=$PWD/src mocha test/**/*.js --watch",
-    "test": "run-s lint test:src build:dist test:dist",
+    "test": "npm run deps && run-s lint test:src build:dist test:dist",
     "dev": "run-s lint clean:dist build:dist test:dist start",
     "watch": "npm run test:watch",
     "start": "node ./index.js",
