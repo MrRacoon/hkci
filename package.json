@@ -18,7 +18,7 @@
     "dev": "run-s lint clean:dist build:dist test:dist start",
     "watch": "npm run test:watch",
     "start": "node ./index.js",
-    "prepublish": "run-s build"
+    "prepublish": "run-s build test:dist"
   },
   "keywords": [
     "haskind",

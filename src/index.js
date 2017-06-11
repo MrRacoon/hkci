@@ -3,12 +3,13 @@ import path from 'path';
 import Getopt from 'node-getopt';
 
 export default () => {
-
-  const config = require('rc')('hkci', {
+  const defaults = {
     vim: false,
     bindings: {},
     global: []
-  });
+  };
+
+  const config = require('rc')('hkci', defaults);
 
   const flags = new Getopt([
     ['c', 'cwd' , 'Load the current directory (using ./package.json).'],
@@ -89,24 +90,26 @@ function load(name, dir) {
     const main    = require(path.resolve(pth, pkgJson.main || 'index.js'));
     console.log('loading', path.resolve(pth, pkgJson.name)); // eslint-disable-line
     return { [name]: main };
+  }
 
-  } else if (dir) {
+  else if (dir) {
     const pth     = dir;
     const pkgJson = require(path.resolve(pth, 'package.json'));
     const main    = require(path.resolve(pth, pkgJson.main || 'index.js'));
     console.log('loading', path.resolve(pth, pkgJson.name)); // eslint-disable-line
     return { [pkgJson.name]: main };
+  }
 
-  } else if (name) {
+  else if (name) {
     const main = require(name);
     console.log('loading', name, 'globally'); // eslint-disable-line
     return { [name]: main };
+  }
 
-  } else {
+  else {
     const pkgJson = require(path.resolve(process.cwd(), 'package.json'));
     const main    = require(path.resolve('./', pkgJson.main || 'index.js'));
     console.log('loading', pkgJson.name, 'directly'); // eslint-disable-line
     return { [pkgJson.name]: main };
-
   }
 }
